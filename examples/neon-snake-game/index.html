@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBER SNAKE 2099 — Neon Retro Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #060713;
+      --bg-panel: rgba(16, 18, 38, 0.75);
+      --border-glow: rgba(0, 240, 255, 0.25);
+      --neon-cyan: #00f0ff;
+      --neon-pink: #ff007f;
+      --neon-purple: #9d4edd;
+      --neon-gold: #ffb703;
+      --neon-green: #00ff88;
+      --text-main: #f0f4fc;
+      --text-muted: #8b9bb4;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #151838 0%, var(--bg-deep) 75%);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .game-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Header & Branding */
+    .game-header {
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 16px rgba(0, 240, 255, 0.05);
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      font-size: 0.65rem;
+      font-family: 'Orbitron', monospace;
+      color: var(--neon-gold);
+      border: 1px solid var(--neon-gold);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+    }
+
+    .btn-icon:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Scoreboard */
+    .scoreboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .score-card {
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .score-card:hover {
+      border-color: rgba(0, 240, 255, 0.3);
+    }
+
+    .score-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .score-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .score-value.cyan { color: var(--neon-cyan); text-shadow: 0 0 8px rgba(0,240,255,0.4); }
+    .score-value.gold { color: var(--neon-gold); text-shadow: 0 0 8px rgba(255,183,3,0.4); }
+    .score-value.pink { color: var(--neon-pink); text-shadow: 0 0 8px rgba(255,0,127,0.4); }
+    .score-value.green { color: var(--neon-green); text-shadow: 0 0 8px rgba(0,255,136,0.4); }
+
+    /* Canvas Area */
+    .canvas-wrapper {
+      position: relative;
+      background: #090b18;
+      border: 2px solid var(--border-glow);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), inset 0 0 30px rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      display: block;
+      background: transparent;
+      image-rendering: pixelated;
+    }
+
+    /* Overlay / Menus */
+    .game-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 7, 19, 0.88);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .game-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .overlay-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .overlay-title.over {
+      color: var(--neon-pink);
+      text-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+    }
+
+    .overlay-title.start {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    }
+
+    .overlay-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    .mode-select-box {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--neon-cyan);
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-cyan), #00a8ff);
+      color: #060914;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    /* Virtual D-Pad for Mobile/Touch */
+    .controls-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+    }
+
+    .hints-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hints-text kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-family: monospace;
+    }
+
+    .dpad-container {
+      display: grid;
+      grid-template-areas:
+        ". up ."
+        "left down right";
+      gap: 6px;
+      width: 140px;
+      height: 94px;
+    }
+
+    .dpad-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: all 0.1s;
+    }
+
+    .dpad-btn:active {
+      background: var(--neon-cyan);
+      color: #000;
+      transform: scale(0.94);
+    }
+
+    .dpad-up { grid-area: up; }
+    .dpad-down { grid-area: down; }
+    .dpad-left { grid-area: left; }
+    .dpad-right { grid-area: right; }
+
+    /* Footer message */
+    .footer-credits {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 4px;
+    }
+    .footer-credits a {
+      color: var(--neon-cyan);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <!-- Header -->
+    <header class="game-header">
+      <div class="brand-title">
+        <span>⚡ CYBER SNAKE</span>
+        <span class="brand-badge">2099</span>
+      </div>
+      <div class="header-actions">
+        <button id="btn-sound-toggle" class="btn-icon" title="Bật/Tắt âm thanh" aria-label="Toggle Sound">🔊</button>
+        <button id="btn-pause" class="btn-icon" title="Tạm dừng / Tiếp tục" aria-label="Pause Game">⏸️</button>
+        <button id="btn-help" class="btn-icon" title="Hướng dẫn" aria-label="Help">❓</button>
+      </div>
+    </header>
+
+    <!-- Scoreboard -->
+    <section class="scoreboard" aria-label="Scoreboard">
+      <div class="score-card">
+        <div class="score-label">Điểm số</div>
+        <div id="val-score" class="score-value cyan">0</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Kỷ lục</div>
+        <div id="val-high-score" class="score-value gold">0</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Cấp độ</div>
+        <div id="val-level" class="score-value pink">1</div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Combo</div>
+        <div id="val-combo" class="score-value green">x1</div>
+      </div>
+    </section>
+
+    <!-- Canvas Playfield -->
+    <div class="canvas-wrapper" id="canvas-container">
+      <canvas id="gameCanvas" width="460" height="460"></canvas>
+
+      <!-- Start / Game Over Overlay -->
+      <div id="game-overlay" class="game-overlay">
+        <h2 id="overlay-title" class="overlay-title start">NEON VIBE</h2>
+        <p id="overlay-msg" class="overlay-subtitle">Sẵn sàng phản xạ nhanh trong không gian Cyberpunk neon!</p>
+        
+        <div class="mode-select-box" id="mode-selector">
+          <button class="mode-btn active" data-mode="classic" id="mode-classic">Cổ Điển</button>
+          <button class="mode-btn" data-mode="rush" id="mode-rush">Tốc Độ</button>
+          <button class="mode-btn" data-mode="hardcore" id="mode-hardcore">Chướng Ngại</button>
+        </div>
+
+        <button id="btn-start" class="btn-primary">
+          <span>CHƠI NGAY</span> ➔
+        </button>
+      </div>
+    </div>
+
+    <!-- Virtual D-Pad & Controls -->
+    <div class="controls-wrapper">
+      <div class="hints-text">
+        <span>🎮 Di chuyển: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> hoặc <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd></span>
+        <span>⏸️ Tạm dừng: <kbd>Space</kbd> | ⚡ Ăn <strong style="color:var(--neon-gold);">Hạt Vàng</strong> nhân 3 điểm</span>
+      </div>
+
+      <div class="dpad-container">
+        <button id="btn-up" class="dpad-btn dpad-up" aria-label="Up">▲</button>
+        <button id="btn-left" class="dpad-btn dpad-left" aria-label="Left">◀</button>
+        <button id="btn-down" class="dpad-btn dpad-down" aria-label="Down">▼</button>
+        <button id="btn-right" class="dpad-btn dpad-right" aria-label="Right">▶</button>
+      </div>
+    </div>
+
+    <div class="footer-credits">
+      Được thiết kế theo chuẩn <strong>Vibe Coding</strong> · Khóa học <a href="../../docs-readme/vi-VN/README.md">Easy-Vibe</a>
+    </div>
+  </div>
+
+  <script>
+    // --- WEB AUDIO API PROCEDURAL SOUND SYNTHESIZER ---
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.1) {
+        if (!this.enabled || !this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      eat() {
+        this.playTone(587.33, 'triangle', 0.12, 0.15); // D5
+        setTimeout(() => this.playTone(880, 'sine', 0.15, 0.12), 60); // A5
+      }
+      specialEat() {
+        this.playTone(659.25, 'triangle', 0.1, 0.2); // E5
+        setTimeout(() => this.playTone(987.77, 'triangle', 0.1, 0.2), 70); // B5
+        setTimeout(() => this.playTone(1318.51, 'sine', 0.25, 0.2), 140); // E6
+      }
+      crash() {
+        this.playTone(120, 'sawtooth', 0.35, 0.3);
+        setTimeout(() => this.playTone(60, 'sawtooth', 0.4, 0.3), 100);
+      }
+      move() {
+        this.playTone(220, 'sine', 0.03, 0.02);
+      }
+    }
+
+    const sound = new SoundFX();
+
+    // --- GAME ENGINE ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // UI elements
+    const scoreVal = document.getElementById('val-score');
+    const highScoreVal = document.getElementById('val-high-score');
+    const levelVal = document.getElementById('val-level');
+    const comboVal = document.getElementById('val-combo');
+
+    const overlay = document.getElementById('game-overlay');
+    const overlayTitle = document.getElementById('overlay-title');
+    const overlayMsg = document.getElementById('overlay-msg');
+    const btnStart = document.getElementById('btn-start');
+    const btnPause = document.getElementById('btn-pause');
+    const btnSoundToggle = document.getElementById('btn-sound-toggle');
+    const btnHelp = document.getElementById('btn-help');
+
+    // Game Config & State
+    const GRID_SIZE = 20;
+    const TILE_COUNT = canvas.width / GRID_SIZE; // 23 tiles
+
+    let mode = 'classic'; // 'classic', 'rush', 'hardcore'
+    let snake = [];
+    let direction = { x: 1, y: 0 };
+    let nextDirection = { x: 1, y: 0 };
+    let food = { x: 15, y: 11, type: 'normal' };
+    let obstacles = [];
+    let particles = [];
+    let score = 0;
+    let highScore = parseInt(localStorage.getItem('cyber_snake_hi') || '0', 10);
+    let level = 1;
+    let combo = 1;
+    let lastEatTime = 0;
+    let isRunning = false;
+    let isPaused = false;
+    let gameLoopTimeout = null;
+    let baseSpeed = 110; // ms per tick
+
+    highScoreVal.textContent = highScore;
+
+    // --- SETUP PARTICLES ---
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = Math.random() * 3 + 1.5;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4 + 1;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.04 + 0.02;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw(c) {
+        c.save();
+        c.globalAlpha = Math.max(0, this.alpha);
+        c.fillStyle = this.color;
+        c.shadowColor = this.color;
+        c.shadowBlur = 8;
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        c.fill();
+        c.restore();
+      }
+    }
+
+    function spawnBurst(pixelX, pixelY, color, count = 15) {
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle(pixelX, pixelY, color));
+      }
+    }
+
+    // --- GAME INITIALIZATION ---
+    function initGame() {
+      snake = [
+        { x: 7, y: 11 },
+        { x: 6, y: 11 },
+        { x: 5, y: 11 }
+      ];
+      direction = { x: 1, y: 0 };
+      nextDirection = { x: 1, y: 0 };
+      score = 0;
+      combo = 1;
+      level = 1;
+      particles = [];
+      scoreVal.textContent = '0';
+      levelVal.textContent = '1';
+      comboVal.textContent = 'x1';
+
+      if (mode === 'rush') baseSpeed = 75;
+      else if (mode === 'hardcore') baseSpeed = 95;
+      else baseSpeed = 110;
+
+      generateObstacles();
+      spawnFood();
+      isRunning = true;
+      isPaused = false;
+      overlay.classList.add('hidden');
+      
+      clearTimeout(gameLoopTimeout);
+      tick();
+    }
+
+    function generateObstacles() {
+      obstacles = [];
+      if (mode !== 'hardcore') return;
+      // Add random obstacles
+      const count = 7;
+      for (let i = 0; i < count; i++) {
+        let obsX = Math.floor(Math.random() * TILE_COUNT);
+        let obsY = Math.floor(Math.random() * TILE_COUNT);
+        // Avoid center spawn area
+        if (obsX > 3 && obsX < 12 && obsY === 11) continue;
+        obstacles.push({ x: obsX, y: obsY });
+      }
+    }
+
+    function spawnFood() {
+      let valid = false;
+      let newX, newY;
+      while (!valid) {
+        newX = Math.floor(Math.random() * TILE_COUNT);
+        newY = Math.floor(Math.random() * TILE_COUNT);
+        valid = !snake.some(segment => segment.x === newX && segment.y === newY) &&
+                !obstacles.some(o => o.x === newX && o.y === newY);
+      }
+      // 20% chance special gold food
+      const isSpecial = Math.random() < 0.2;
+      food = {
+        x: newX,
+        y: newY,
+        type: isSpecial ? 'gold' : 'normal',
+        pulse: 0
+      };
+    }
+
+    // --- TICK / UPDATE LOOP ---
+    function tick() {
+      if (!isRunning || isPaused) return;
+
+      direction = { ...nextDirection };
+      const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+      // Check Wall Collision
+      if (head.x < 0 || head.x >= TILE_COUNT || head.y < 0 || head.y >= TILE_COUNT) {
+        gameOver("Bạn đã đâm vào tường Cyber!");
+        return;
+      }
+
+      // Check Self Collision
+      if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+        gameOver("Tự cắn phải đuôi của mình!");
+        return;
+      }
+
+      // Check Obstacle Collision
+      if (obstacles.some(o => o.x === head.x && o.y === head.y)) {
+        gameOver("Va chạm với khối chướng ngại vật!");
+        return;
+      }
+
+      snake.unshift(head);
+
+      // Check Food Collision
+      if (head.x === food.x && head.y === food.y) {
+        const now = Date.now();
+        if (now - lastEatTime < 3000) {
+          combo = Math.min(5, combo + 1);
+        } else {
+          combo = 1;
+        }
+        lastEatTime = now;
+        comboVal.textContent = `x${combo}`;
+
+        const isGold = food.type === 'gold';
+        const points = (isGold ? 50 : 10) * combo;
+        score += points;
+        scoreVal.textContent = score;
+
+        if (score > highScore) {
+          highScore = score;
+          highScoreVal.textContent = highScore;
+          localStorage.setItem('cyber_snake_hi', highScore);
+        }
+
+        // Particle Burst
+        const px = food.x * GRID_SIZE + GRID_SIZE / 2;
+        const py = food.y * GRID_SIZE + GRID_SIZE / 2;
+        spawnBurst(px, py, isGold ? 'var(--neon-gold)' : 'var(--neon-cyan)', isGold ? 24 : 14);
+
+        if (isGold) sound.specialEat();
+        else sound.eat();
+
+        // Level up every 60 points
+        level = Math.floor(score / 60) + 1;
+        levelVal.textContent = level;
+
+        spawnFood();
+      } else {
+        snake.pop();
+      }
+
+      draw();
+
+      const currentSpeed = Math.max(45, baseSpeed - (level - 1) * 6);
+      gameLoopTimeout = setTimeout(tick, currentSpeed);
+    }
+
+    // --- RENDER FUNCTION ---
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. Draw subtle grid
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += GRID_SIZE) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += GRID_SIZE) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // 2. Draw Obstacles (if any)
+      obstacles.forEach(o => {
+        ctx.fillStyle = '#ff3366';
+        ctx.shadowColor = '#ff3366';
+        ctx.shadowBlur = 10;
+        ctx.fillRect(o.x * GRID_SIZE + 2, o.y * GRID_SIZE + 2, GRID_SIZE - 4, GRID_SIZE - 4);
+      });
+
+      // 3. Draw Food
+      food.pulse = (food.pulse || 0) + 0.1;
+      const pulseSize = Math.sin(food.pulse) * 1.5;
+      const fx = food.x * GRID_SIZE + GRID_SIZE / 2;
+      const fy = food.y * GRID_SIZE + GRID_SIZE / 2;
+      const fRadius = (GRID_SIZE / 2 - 3) + pulseSize;
+
+      ctx.save();
+      if (food.type === 'gold') {
+        ctx.fillStyle = '#ffb703';
+        ctx.shadowColor = '#ffb703';
+        ctx.shadowBlur = 16;
+      } else {
+        ctx.fillStyle = '#00f0ff';
+        ctx.shadowColor = '#00f0ff';
+        ctx.shadowBlur = 12;
+      }
+      ctx.beginPath();
+      ctx.arc(fx, fy, Math.max(2, fRadius), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // 4. Draw Snake
+      snake.forEach((seg, i) => {
+        ctx.save();
+        const sx = seg.x * GRID_SIZE + 1.5;
+        const sy = seg.y * GRID_SIZE + 1.5;
+        const size = GRID_SIZE - 3;
+
+        if (i === 0) {
+          // Head
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowColor = '#00f0ff';
+          ctx.shadowBlur = 16;
+          ctx.fillRect(sx, sy, size, size);
+
+          // Eye indicator
+          ctx.fillStyle = '#060713';
+          const eyeSize = 3;
+          let eyeX = sx + 4, eyeY = sy + 4;
+          if (direction.x === 1) eyeX = sx + size - 6;
+          if (direction.y === 1) eyeY = sy + size - 6;
+          ctx.fillRect(eyeX, eyeY, eyeSize, eyeSize);
+        } else {
+          // Body gradient from Cyan to Purple/Pink
+          const progress = i / snake.length;
+          const r = Math.floor(0 + progress * 200);
+          const g = Math.floor(240 - progress * 150);
+          const b = Math.floor(255);
+          ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+          ctx.shadowColor = `rgb(${r}, ${g}, ${b})`;
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          ctx.roundRect(sx, sy, size, size, 4);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+
+      // 5. Draw Particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw(ctx);
+        if (p.alpha <= 0) particles.splice(i, 1);
+      }
+    }
+
+    // --- GAME OVER ---
+    function gameOver(reason) {
+      isRunning = false;
+      sound.crash();
+      overlayTitle.textContent = "GAME OVER";
+      overlayTitle.className = "overlay-title over";
+      overlayMsg.textContent = `${reason} — Bạn đạt được ${score} điểm!`;
+      btnStart.innerHTML = `<span>CHƠI LẠI</span> ➔`;
+      overlay.classList.remove('hidden');
+    }
+
+    // --- INPUT HANDLING ---
+    function setDirection(dx, dy) {
+      if (!isRunning || isPaused) return;
+      // Prevent 180-degree instant reversal
+      if (dx !== 0 && direction.x !== 0) return;
+      if (dy !== 0 && direction.y !== 0) return;
+      nextDirection = { x: dx, y: dy };
+      sound.move();
+    }
+
+    window.addEventListener('keydown', (e) => {
+      sound.init();
+      switch (e.key) {
+        case 'ArrowUp':
+        case 'w':
+        case 'W':
+          setDirection(0, -1);
+          e.preventDefault();
+          break;
+        case 'ArrowDown':
+        case 's':
+        case 'S':
+          setDirection(0, 1);
+          e.preventDefault();
+          break;
+        case 'ArrowLeft':
+        case 'a':
+        case 'A':
+          setDirection(-1, 0);
+          e.preventDefault();
+          break;
+        case 'ArrowRight':
+        case 'd':
+        case 'D':
+          setDirection(1, 0);
+          e.preventDefault();
+          break;
+        case ' ':
+          togglePause();
+          e.preventDefault();
+          break;
+      }
+    });
+
+    function togglePause() {
+      if (!isRunning) return;
+      isPaused = !isPaused;
+      btnPause.textContent = isPaused ? '▶️' : '⏸️';
+      if (!isPaused) tick();
+    }
+
+    // Virtual Buttons
+    document.getElementById('btn-up').addEventListener('click', () => { sound.init(); setDirection(0, -1); });
+    document.getElementById('btn-down').addEventListener('click', () => { sound.init(); setDirection(0, 1); });
+    document.getElementById('btn-left').addEventListener('click', () => { sound.init(); setDirection(-1, 0); });
+    document.getElementById('btn-right').addEventListener('click', () => { sound.init(); setDirection(1, 0); });
+
+    btnStart.addEventListener('click', () => {
+      sound.init();
+      initGame();
+    });
+
+    btnPause.addEventListener('click', togglePause);
+
+    btnSoundToggle.addEventListener('click', () => {
+      sound.init();
+      sound.enabled = !sound.enabled;
+      btnSoundToggle.textContent = sound.enabled ? '🔊' : '🔇';
+    });
+
+    btnHelp.addEventListener('click', () => {
+      alert("HƯỚNG DẪN CHƠI CYBER SNAKE:\n- Dùng phím mũi tên hoặc WASD để chuyển hướng.\n- Ăn hạt xanh: +10 điểm.\n- Ăn hạt vàng chớp nháy: +50 điểm và tạo nổ hạt.\n- Ăn liên tiếp để tăng hệ số Combo (tối đa x5).\n- Phím Space để tạm dừng.");
+    });
+
+    // Mode Selector
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        mode = e.target.getAttribute('data-mode');
+      });
+    });
+
+    // Initial render behind overlay
+    draw();
+  </script>
+</body>
+</html>

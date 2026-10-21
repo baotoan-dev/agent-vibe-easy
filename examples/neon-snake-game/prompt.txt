@@ -1,0 +1,8 @@
+Hãy tạo cho tôi một game Rắn Săn Mồi (Neon Snake) phong cách Cyberpunk cực đẹp:
+- Giao diện Dark Mode cao cấp, viền neon phát sáng (cyan, tím, hồng).
+- Bảng hiển thị điểm số, điểm cao nhất (lưu LocalStorage), cấp độ và hệ số combo.
+- Hiệu ứng hạt (particle burst) khi ăn mồi, hiệu ứng rung màn hình nhẹ khi va chạm.
+- Có âm thanh tổng hợp retro bằng Web Audio API (âm ăn mồi, tăng tốc, game over, nhạc nền synth nhẹ).
+- Có 3 chế độ chơi: Cổ điển (Classic), Tốc độ cao (Speed Rush), Vượt chướng ngại vật (Obstacles).
+- Điều khiển mượt mà bằng phím mũi tên / WASD và có cụm nút ảo trên màn hình cho chuột/cảm ứng.
+- Viết thành một file HTML hoàn chỉnh có thể mở trực tiếp trên trình duyệt.
