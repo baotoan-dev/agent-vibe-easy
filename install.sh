@@ -10,5 +10,5 @@ if [ -d "$TARGET_DIR" ]; then
 else
     git clone "$REPO_URL" "$TARGET_DIR" --quiet
     echo -e "\033[0;32m✅ Successfully installed into .agents!\033[0m"
-    echo -e "📦 54 Skills | 10 Rules | 5 Workflows | 6 Subagents | 7 Templates"
+    echo -e "📦 54 Skills | 11 Rules (Auto-Routing) | 5 Workflows | 6 Subagents | 7 Templates"
 fi

@@ -15,7 +15,8 @@ c:\Projects\easy-vibe\.agents\
 ├── 📋 skills.json               # Khai báo đăng ký Skills
 ├── 🧩 plugins.json              # Khai báo đăng ký Plugins
 │
-├── 🛡️ rules/                    # 10 QUY TẮC BẤT BIẾN (Luật bảo vệ an toàn 24/7)
+├── 🛡️ rules/                    # 11 QUY TẮC BẤT BIẾN (Luật bảo vệ an toàn 24/7)
+│   ├── skill-auto-routing.md    # Tự động ánh xạ và điều phối kỹ năng theo yêu cầu tự nhiên
 │   ├── vibe-coding-rules.md     # 6 kỷ luật lập trình tự do nhưng chuẩn xác
 │   ├── code-quality-security.md # Tiêu chuẩn sạch mã và chống rò rỉ bí mật
 │   ├── surgical-debugging-rules.md # Gỡ lỗi phẫu thuật, sửa tối thiểu, cấm đập đi xây lại

@@ -1,43 +1,13 @@
-# 🛸 AGENT VIBE EASY — MASTER AI AGENT TOOLKIT
+# 🛸 TỔNG HÀNH DINH TÙY BIẾN AGENT (AI AGENT MASTER HEADQUARTERS)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Skills: 54](https://img.shields.io/badge/Skills-54%20Battle--Tested-blue.svg)](./skills)
-[![Rules: 10](https://img.shields.io/badge/Rules-10%20Immutable-red.svg)](./rules)
-[![Workflows: 5](https://img.shields.io/badge/Workflows-5%20Standard%20SOP-green.svg)](./workflows)
-[![Agents: 6](https://img.shields.io/badge/Personas-6%20Specialized-purple.svg)](./agents)
-[![Templates: 7](https://img.shields.io/badge/Templates-7%20Production--Ready-orange.svg)](./templates)
-
-Trung tâm điều khiển AI Agent toàn năng và đầy đủ nhất cho kỷ nguyên **Vibe Coding**, tích hợp 100% giáo trình **Easy-Vibe (Datawhale & ĐH Thanh Hoa)** kết hợp cùng các hệ sinh thái hàng đầu thế giới: **Matt Pocock (AI Hero)**, **Anthropic Skills**, **Vercel Agent Skills**, **Boris Cherny (Claude Code)**, **Jesse Vincent (Superpowers)**, **UI/UX Pro Max**, **LlamaIndex**, **Dify**, **Godot Engine**, **Docker** và **OWASP Top 10**.
+Chào mừng bạn đến với trung tâm điều khiển AI Agent toàn năng và đầy đủ nhất, tích hợp 100% giáo trình **Easy-Vibe (Datawhale & ĐH Thanh Hoa)** từ Cơ bản, Nâng cao đến Phụ lục kỹ thuật, kết hợp cùng các hệ sinh thái hàng đầu thế giới: **Matt Pocock (AI Hero)**, **Anthropic Skills**, **Vercel Agent Skills**, **Boris Cherny (Claude Code)**, **Jesse Vincent (Superpowers)**, **UI/UX Pro Max**, **LlamaIndex**, **Dify**, **Godot Engine**, **Docker** và **OWASP Top 10**.
 
 ---
 
-## ⚡ CÀI ĐẶT NHANH (QUICK INSTALLATION)
-
-### Cách 1: Clone trực tiếp làm thư mục `.agents` cho dự án của bạn (Khuyến nghị)
-```bash
-git clone https://github.com/baotoan-dev/agent-vibe-easy.git .agents
-```
-
-### Cách 2: Cài đặt qua trình quản lý kỹ năng Skills CLI
-```bash
-npx skills add baotoan-dev/agent-vibe-easy -y
-```
-
-### Cách 3: Sử dụng cho Claude Code (`~/.claude/skills/`)
-```bash
-# Windows PowerShell
-git clone https://github.com/baotoan-dev/agent-vibe-easy.git "$HOME/.claude/skills/agent-vibe-easy"
-
-# macOS / Linux
-git clone https://github.com/baotoan-dev/agent-vibe-easy.git ~/.claude/skills/agent-vibe-easy
-```
-
----
-
-## 🏛️ SƠ ĐỒ TOÀN BỘ KIẾN TRÚC THƯ MỤC:
+## 🏛️ SƠ ĐỒ TOÀN BỘ KIẾN TRÚC THƯ MỤC `.agents/`:
 
 ```
-agent-vibe-easy/
+c:\Projects\easy-vibe\.agents\
 │
 ├── 📜 README.md                 # Bảng điều khiển trung tâm (Master Dashboard)
 ├── ⚙️ hooks.json                # Vòng đời tự động hóa (Lifecycle Hooks: An toàn & Auto-Format)
@@ -45,7 +15,8 @@ agent-vibe-easy/
 ├── 📋 skills.json               # Khai báo đăng ký Skills
 ├── 🧩 plugins.json              # Khai báo đăng ký Plugins
 │
-├── 🛡️ rules/                    # 10 QUY TẮC BẤT BIẾN (Luật bảo vệ an toàn 24/7)
+├── 🛡️ rules/                    # 11 QUY TẮC BẤT BIẾN (Luật bảo vệ an toàn 24/7)
+│   ├── skill-auto-routing.md    # Tự động ánh xạ và điều phối kỹ năng theo yêu cầu tự nhiên
 │   ├── vibe-coding-rules.md     # 6 kỷ luật lập trình tự do nhưng chuẩn xác
 │   ├── code-quality-security.md # Tiêu chuẩn sạch mã và chống rò rỉ bí mật
 │   ├── surgical-debugging-rules.md # Gỡ lỗi phẫu thuật, sửa tối thiểu, cấm đập đi xây lại
@@ -154,9 +125,3 @@ agent-vibe-easy/
         ├── find-skills/         # Tự động tìm kiếm & cài đặt kỹ năng từ skills.sh
         └── skill-creator/       # Meta-skill tự động sinh kỹ năng mới
 ```
-
----
-
-## 📄 GIẤY PHÉP BẢN QUYỀN (LICENSE)
-
-Dự án được phân phối dưới giấy phép [MIT License](LICENSE).

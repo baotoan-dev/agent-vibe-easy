@@ -12,5 +12,5 @@ if (Test-Path $targetDir) {
 } else {
     git clone $repoUrl $targetDir --quiet
     Write-Host "✅ ĐÃ KÍCH HOẠT THÀNH CÔNG!" -ForegroundColor Green
-    Write-Host "📦 54 Skills | 10 Rules | 5 Workflows | 6 Subagents | 7 Templates" -ForegroundColor White
+    Write-Host "📦 54 Skills | 11 Rules (Auto-Routing) | 5 Workflows | 6 Subagents | 7 Templates" -ForegroundColor White
 }
