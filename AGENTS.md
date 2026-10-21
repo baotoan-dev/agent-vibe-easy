@@ -58,4 +58,6 @@ Mọi tác vụ liên quan đến UI/UX, Frontend, Web App hoặc CSS bắt bu�
 5. **Hệ thống không gian:** Bội số 8px, viền mảnh 1px tinh tế, khuyến khích bất đối xứng.
 6. **Giọng nói đi trước layout:** Xác định tone of voice trước khi viết copy và dựng layout.
 7. **Tinh chỉnh bằng cách XÓA:** Khi tối ưu, hãy xóa bớt yếu tố thừa trước khi thêm thắt hiệu ứng.
+8. **Cấm fix cứng pixel:** Tuyệt đối không hardcode px ("magic numbers" như 300px, 385px). Bắt buộc dùng kích thước nội tại max-content, min-content, hàm clamp(), min(), đơn vị ch, rem, % và flexbox tự động co giãn.
+
 

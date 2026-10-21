@@ -114,3 +114,5 @@ Trước khi gửi bất kỳ giao diện nào cho người dùng, AI phải t�
 - [ ] 5. Có lạm dụng shadow nhòe nhoẹt không? Đã thay bằng viền kính 1px tinh tế chưa?
 - [ ] 6. Bảng màu đã được neo vào một theme thực tế chưa (hay là AI tự đoán màu)?
 - [ ] 7. Đã thực hiện bước "tỉa bớt các chi tiết thừa thãi" chưa?
+- [ ] 8. Có bị hardcode "magic numbers" pixel cứng (width: 300px, 385px, min-width) không? Đã chuyển sang kích thước nội tại max-content, min(), clamp(), ch, rem chưa?
+
