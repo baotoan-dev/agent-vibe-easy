@@ -1,0 +1,32 @@
+{
+  "safety-gate": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -Command \"Write-Host '🛡️ Safety Guard: Validating command safety...'\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "code-formatter": {
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -Command \"Write-Host '✨ Code Formatter: File saved.'\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

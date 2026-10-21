@@ -1,0 +1,22 @@
+{
+  "name": "agent-vibe-easy",
+  "version": "1.0.0",
+  "description": "Master AI Agent Toolkit: 54 Skills, 10 Rules, 5 Workflows, 6 Subagents, and 7 Templates for AI Coding",
+  "author": "baotoan-dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baotoan-dev/agent-vibe-easy.git"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "skills",
+    "vibe-coding",
+    "claude-code",
+    "cursor",
+    "antigravity",
+    "rules",
+    "workflows"
+  ]
+}
