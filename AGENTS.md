@@ -47,3 +47,15 @@ Mỗi khi người dùng đưa ra một yêu cầu (dự án mới, tính năng,
 2. **Ánh xạ kỹ năng:** Khớp các skill liên quan (ví dụ: `ui-ux-pro-max`, `frontend-design-mastery`, `spec-driven-coding`, `security-audit-owasp`, `ai-debugging-loop`).
 3. **Hiển thị cam kết chất lượng:** Nêu rõ các nguyên tắc kỹ thuật sẽ tuân thủ.
 4. **Tuyệt đối không làm tắt:** Đọc file `SKILL.md` tương ứng để áp dụng đầy đủ checklist.
+
+## Anti-AI-Slop Design Protocol (Bắt Buộc Cho Mọi Giao Diện)
+
+Mọi tác vụ liên quan đến UI/UX, Frontend, Web App hoặc CSS bắt buộc phải tuân thủ nghiêm ngặt **7 Điều Luật Chống AI Slop** tại `.agents/rules/anti-ai-slop-rules.md`:
+1. **Neo vào tham chiếu cụ thể:** Cấm dùng chữ "làm hiện đại", phải neo vào một thương hiệu / trường phái cụ thể (Linear, Kinfolk, Apple Bento Grid, Wabi-Sabi).
+2. **Danh sách cấm (Negative Blacklist):** Cấm dùng `Inter`/`Roboto` làm font tiêu đề chính; cấm gradient tím sang chàm; cấm layout 3 thẻ ngang bằng nhau trên nền trắng; cấm soft drop shadow mờ nhạt.
+3. **Chỉ chọn từ bộ tuyển sẵn:** Áp dụng bộ preset `+style`, `+palette`, `+font` từ `ui-ux-pro-max`.
+4. **Một quyết định thị giác áp đảo:** Mỗi màn hình phải có một "yếu tố to nhất phòng" chiếm ưu thế thị giác; các phần tử khác lùi xuống làm nền.
+5. **Hệ thống không gian:** Bội số 8px, viền mảnh 1px tinh tế, khuyến khích bất đối xứng.
+6. **Giọng nói đi trước layout:** Xác định tone of voice trước khi viết copy và dựng layout.
+7. **Tinh chỉnh bằng cách XÓA:** Khi tối ưu, hãy xóa bớt yếu tố thừa trước khi thêm thắt hiệu ứng.
+
