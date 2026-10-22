@@ -59,5 +59,7 @@ Mọi tác vụ liên quan đến UI/UX, Frontend, Web App hoặc CSS bắt bu�
 6. **Giọng nói đi trước layout:** Xác định tone of voice trước khi viết copy và dựng layout.
 7. **Tinh chỉnh bằng cách XÓA:** Khi tối ưu, hãy xóa bớt yếu tố thừa trước khi thêm thắt hiệu ứng.
 8. **Cấm fix cứng pixel:** Tuyệt đối không hardcode px ("magic numbers" như 300px, 385px). Bắt buộc dùng kích thước nội tại max-content, min-content, hàm clamp(), min(), đơn vị ch, rem, % và flexbox tự động co giãn.
+9. **Cấm tự sinh icon & emoji (Zero-Icon & Zero-Emoji Slop):** Tuyệt đối KHÔNG tự ý chèn emoji vào tiêu đề, danh sách, hay phản hồi chat; KHÔNG nhét icon trang trí vào trước tiêu đề card, tabs, hoặc trước nhãn nút bấm có chữ (như "Tìm kiếm", "Lưu", "Xóa"). Tuân thủ triệt để `.agents/rules/no-icon-slop-rules.md`.
+
 
 
