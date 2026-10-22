@@ -51,7 +51,7 @@ DANH SÁCH CẤM TUYỆT ĐỐI (NEGATIVE BLACKLIST):
   - CẤM layout: 3 thẻ tính năng kích thước bằng nhau đặt ngang hàng trên nền trắng.
   - CẤM câu chữ: "Thay đổi cách bạn làm việc", "Nền tảng tất cả trong một", "Nâng tầm trải nghiệm".
   - CẤM hiệu ứng: Soft drop shadow mờ nhạt làm bẩn giao diện (thay bằng vạch kẻ 1px hoặc viền kính).
-  - CẤM icon trang trí: Không gắn icon vào mọi ngóc ngách khi không có chức năng hành động.
+  - CẤM icon & emoji trang trí: Cấm chèn emoji vào tiêu đề, danh sách, bảng biểu; cấm nhét icon vào trước nhãn nút bấm có chữ; cấm icon trang trí vô nghĩa làm bẩn giao diện.
 ```
 
 ---
@@ -114,3 +114,7 @@ Trước khi gửi bất kỳ giao diện nào cho người dùng, AI phải t�
 - [ ] 5. Có lạm dụng shadow nhòe nhoẹt không? Đã thay bằng viền kính 1px tinh tế chưa?
 - [ ] 6. Bảng màu đã được neo vào một theme thực tế chưa (hay là AI tự đoán màu)?
 - [ ] 7. Đã thực hiện bước "tỉa bớt các chi tiết thừa thãi" chưa?
+- [ ] 8. Có bị hardcode "magic numbers" pixel cứng (width: 300px, 385px, min-width) không? Đã chuyển sang kích thước nội tại max-content, min(), clamp(), ch, rem chưa?
+- [ ] 9. Có tự ý sinh emoji trong văn bản hoặc nhét icon trang trí thừa thãi vào trước chữ nút bấm / tiêu đề không? (Tuân thủ nghiêm ngặt no-icon-slop-rules.md).
+
+
