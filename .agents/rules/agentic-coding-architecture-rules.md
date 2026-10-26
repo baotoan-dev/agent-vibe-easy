@@ -1,8 +1,8 @@
-﻿# Quy Chuẩn Kiến Trúc Lập Trình Tác Nhân (Agentic Coding Architecture Protocol)
+# Quy Chuẩn Kiến Trúc Lập Trình Tác Nhân (Agentic Coding Architecture Protocol)
 
 Quy chuẩn này được đúc kết từ nghiên cứu kỹ thuật đảo ngược (reverse-engineering) các hệ thống prompt và kiến trúc điều phối hàng đầu: **Cursor, Windsurf (Cascade), Claude Code (Anthropic), và v0 (Vercel)**.
 
-Mọi tác nhân AI khi làm việc trong workspace bắt buộc phải tuân thủ nghiêm ngặt 5 nguyên tắc sau:
+Mọi tác nhân AI khi làm việc trong workspace bắt buộc phải tuân thủ nghiêm ngặt 6 nguyên tắc sau:
 
 ---
 
@@ -46,3 +46,13 @@ Khi một lệnh thực thi trong terminal gặp thất bại (`exit code != 0`)
 
 - Luôn ưu tiên tái sử dụng các tiện ích, component, API client và Design Tokens đã có sẵn trong dự án.
 - Tuyệt đối không tự ý cài đặt thêm các thư viện bên ngoài (`npm install`) trừ khi người dùng yêu cầu rõ ràng hoặc giải pháp hiện tại không thể đáp ứng.
+
+---
+
+## 6. Kỷ Luật Triệt Tiêu Magic String (Enum-Driven Architecture)
+
+- **Cấm viết Magic String:** Tuyệt đối không viết trực tiếp string literal (`'error'`, `'ok'`, `'pending'`, `'success'`, `'admin'`) cho các giá trị trạng thái, vai trò, mã sự kiện hoặc loại đối tượng.
+- **Tập trung hóa trong thư mục `enums/`:** Mọi hằng số trạng thái phải được định nghĩa tường minh bằng String Enum trong file `<domain>.enum.ts` (ví dụ: `telemetry.enum.ts`, `order.enum.ts`).
+- **Ràng buộc Type-First:** Interface, DTO và Model bắt buộc phải khai báo trường trạng thái bằng kiểu Enum (`status: SpanStatus`), không dùng union string (`status: 'ok' | 'error'`).
+- **So sánh và Test chuẩn mực:** Toàn bộ logic so sánh (`if`, `switch-case`, `filter`) và kiểm thử `expect()` phải tham chiếu trực tiếp đến `Enum.MEMBER`.
+

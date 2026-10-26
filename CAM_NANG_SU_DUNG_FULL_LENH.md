@@ -22,6 +22,7 @@ Bạn **không cần nhớ hết 46+ kỹ năng**. Chỉ cần nhắc đến ngh
 - Nhắc đến *"Deploy / Docker / Vercel / CI-CD"* $\rightarrow$ Tự kích hoạt `cloud-deployment-devops`.
 - Nhắc đến *"Bảo mật / Lỗ hổng / OWASP / Audit"* $\rightarrow$ Tự kích hoạt `security-audit-cloudflare` & `security-audit-owasp`.
 - Nhắc đến *"Tối giản code / Refactor / Chống over-engineering"* $\rightarrow$ Tự kích hoạt `ponytail-lean-code`.
+- Nhắc đến *"Enum / Trạng thái / Status / Magic String / Kiểu dữ liệu"* $\rightarrow$ Tự kích hoạt `enum-driven-architecture`.
 - Nhắc đến *"Điều phối nhóm / Phân vai / CEO / Designer / QA"* $\rightarrow$ Tự kích hoạt `gstack-workflows` & `agent-teams-workflow`.
 - Nhắc đến *"Đồ thị tri thức / Bản đồ codebase / Quan hệ file"* $\rightarrow$ Tự kích hoạt `graphify`.
 
