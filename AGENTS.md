@@ -44,7 +44,7 @@ There is no dedicated test framework in this repo. Use `npm run build` as the pr
 
 Mỗi khi người dùng đưa ra một yêu cầu (dự án mới, tính năng, gỡ lỗi, tái cấu trúc), AI **bắt buộc** phải tự động ánh xạ (map) kỹ năng từ `.agents/skills/` và xuất **Bảng Điều Phối Kỹ Năng (Skill Routing Matrix)** trước khi viết mã:
 1. **Phân tích yêu cầu:** Bóc tách các mảng UI/UX, logic, database, security.
-2. **Ánh xạ kỹ năng:** Khớp các skill liên quan (ví dụ: `ui-ux-pro-max`, `frontend-design-mastery`, `spec-driven-coding`, `security-audit-owasp`, `ai-debugging-loop`).
+2. **Ánh xạ kỹ năng:** Khớp các skill liên quan (ví dụ: `ui-ux-pro-max`, `frontend-design-mastery`, `spec-driven-coding`, `security-audit-cloudflare`, `security-audit-owasp`, `ponytail-lean-code`, `gstack-workflows`, `ai-debugging-loop`).
 3. **Hiển thị cam kết chất lượng:** Nêu rõ các nguyên tắc kỹ thuật sẽ tuân thủ.
 4. **Tuyệt đối không làm tắt:** Đọc file `SKILL.md` tương ứng để áp dụng đầy đủ checklist.
 
@@ -60,6 +60,16 @@ Mọi tác vụ liên quan đến UI/UX, Frontend, Web App hoặc CSS bắt bu�
 7. **Tinh chỉnh bằng cách XÓA:** Khi tối ưu, hãy xóa bớt yếu tố thừa trước khi thêm thắt hiệu ứng.
 8. **Cấm fix cứng pixel:** Tuyệt đối không hardcode px ("magic numbers" như 300px, 385px). Bắt buộc dùng kích thước nội tại max-content, min-content, hàm clamp(), min(), đơn vị ch, rem, % và flexbox tự động co giãn.
 9. **Cấm tự sinh icon & emoji (Zero-Icon & Zero-Emoji Slop):** Tuyệt đối KHÔNG tự ý chèn emoji vào tiêu đề, danh sách, hay phản hồi chat; KHÔNG nhét icon trang trí vào trước tiêu đề card, tabs, hoặc trước nhãn nút bấm có chữ (như "Tìm kiếm", "Lưu", "Xóa"). Tuân thủ triệt để `.agents/rules/no-icon-slop-rules.md`.
+
+## Agentic Coding Architecture Protocol (Bắt Buộc Cho Mọi Tác Vụ Code)
+
+Mọi tác vụ viết mã, sửa lỗi hoặc tái cấu trúc bắt buộc phải tuân thủ nghiêm ngặt **5 Nguyên Tắc Kiến Trúc Tác Nhân** tại `.agents/rules/agentic-coding-architecture-rules.md`:
+1. **Cổng kiểm chứng nghiêm ngặt (Verification Gate):** Không đoán mò, bắt buộc chạy lệnh kiểm tra terminal (build/test/lint) và chỉ xác nhận hoàn thành khi `exit code == 0`.
+2. **Kỷ luật phẫu thuật mã nguồn (Surgical Diffs):** Cấm viết lại toàn bộ file, cấm tự ý format code không liên quan gây ô nhiễm git diff.
+3. **Khảo sát ngữ cảnh theo tầng kiểu (Type-First Discovery):** Đọc file `types/`, `schema.ts`, interface trước khi viết logic; lần theo chuỗi import/export có chọn lọc.
+4. **Vòng tự khắc phục lỗi có chủ đích:** Khi lệnh terminal thất bại, cấm xin lỗi, cấm chạy lại y hệt lệnh cũ; bắt buộc phân tích `stderr`, sửa dòng lỗi và chạy lại kiểm chứng.
+5. **Không gian giải pháp khép kín:** Tối đa hóa tái sử dụng các tiện ích, design tokens và components có sẵn trong dự án; cấm tự ý cài thư viện ngoài khi chưa cần thiết.
+
 
 
 
